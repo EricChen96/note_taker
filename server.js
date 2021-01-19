@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-let currentNotes = [];
 let idCount = 0;
 
 
@@ -22,19 +21,21 @@ app.get("/api/notes", (req, res) => {
     );
 });
 
+let currentNotes = [];
+
 app.post("/api/notes", (req, res) => {
     let newNote = req.body;
-    newNote.id = idCount++;
-    currentNotes.push(newNote);
-    // fs.readFile('./db/db.json', 'utf8', (error, data) => {
-    //     currentNotes = JSON.parse(data);
-    //     currentNotes.push(newNote);
-    // });
-
-    fs.writeFile('./db/db.json', JSON.stringify(currentNotes), (err) =>
-        err ? console.error(err) : console.log('Commit logged!')
-    );
-    res.json(true);
+    // currentNotes.push(newNote);
+    fs.readFile('./db/db.json', 'utf8', (error, data) => {
+        currentNotes = [... JSON.parse(data)];
+        idCount = currentNotes[currentNotes.length-1].id+1;
+        newNote.id = idCount;
+        currentNotes.push(newNote);
+        fs.writeFile('./db/db.json', JSON.stringify(currentNotes), (err) =>
+            err ? console.error(err) : console.log('Commit logged!')
+        );
+    })
+    res.json(newNote);
 });
 
 app.get("*", (req, res) => {
