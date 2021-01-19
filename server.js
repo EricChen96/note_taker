@@ -27,8 +27,10 @@ app.post("/api/notes", (req, res) => {
     let newNote = req.body;
     // currentNotes.push(newNote);
     fs.readFile('./db/db.json', 'utf8', (error, data) => {
-        currentNotes = [... JSON.parse(data)];
-        idCount = currentNotes[currentNotes.length-1].id+1;
+        if(data) {
+            currentNotes = [... JSON.parse(data)];
+            idCount = currentNotes[currentNotes.length-1].id+1;
+        }
         newNote.id = idCount;
         currentNotes.push(newNote);
         fs.writeFile('./db/db.json', JSON.stringify(currentNotes), (err) =>
