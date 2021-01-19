@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(path.join(__dirname,"./public")));
 
 let idCount = 0;
 
@@ -25,19 +26,36 @@ let currentNotes = [];
 
 app.post("/api/notes", (req, res) => {
     let newNote = req.body;
-    // currentNotes.push(newNote);
-    fs.readFile('./db/db.json', 'utf8', (error, data) => {
-        if(data) {
-            currentNotes = [... JSON.parse(data)];
-            idCount = currentNotes[currentNotes.length-1].id+1;
+    fs.readFile(path.join(__dirname, './db/db.json'), 'utf8', (error, data) => {
+        if (data) {
+            currentNotes = [...JSON.parse(data)];
+            idCount = currentNotes[currentNotes.length - 1].id + 1;
         }
         newNote.id = idCount;
         currentNotes.push(newNote);
-        fs.writeFile('./db/db.json', JSON.stringify(currentNotes), (err) =>
+        fs.writeFile(path.join(__dirname,'./db/db.json'), JSON.stringify(currentNotes), (err) =>
             err ? console.error(err) : console.log('Commit logged!')
         );
-    })
+    });
     res.json(newNote);
+});
+
+app.delete("/api/notes/:id", (req, res) => {
+    const chosen = parseInt(req.params.id);
+    fs.readFile(path.join(__dirname, './db/db.json'), 'utf8', (error, data) => {
+        if (data) {
+            let notes = [...JSON.parse(data)];
+            for (let i = 0; i < notes.length; i++) {
+                if (chosen === notes[i].id) {
+                    notes.splice(i, 1);
+                }
+            }
+            fs.writeFile(path.join(__dirname,'./db/db.json'), JSON.stringify(notes), (err) =>
+                err ? console.error(err) : console.log('Note Deleted!')
+            );
+        }
+    });
+    res.json(true);
 });
 
 app.get("*", (req, res) => {
