@@ -4,7 +4,7 @@
 ![Note Taker Preview](./public/assets/notes_screenshot.png)
 
 [Link to Github repository](https://github.com/EricChen96/note_taker) <br>
-[Link to site](https://calm-journey-92391.herokuapp.com/) <br>
+[Link to site](https://note-taker-ericchen96.herokuapp.com/) <br>
 
 ## Description
 The following code create an app that allows the user to record notes. The app is linked to a server so it records the notes taken.
