@@ -27,6 +27,7 @@ app.get("/api/notes", (req, res) => {
 app.post("/api/notes", (req, res) => {
     let newNote = req.body;
     fs.readFile(path.join(__dirname, './db/db.json'), 'utf8', (error, data) => {
+        // checks if there are other notes
         if (JSON.parse(data).length >= 1) {
             currentNotes = [...JSON.parse(data)];
             idCount = currentNotes[currentNotes.length - 1].id + 1;
