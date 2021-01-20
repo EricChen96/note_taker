@@ -21,6 +21,10 @@ The following code create an app that allows the user to record notes. The app i
 Go to Github and download.
 
 ## Usage
+Option 1:
+1. Use Heroku link
+
+Option 2:
 1. Run 'npm i' in your terminal to install needed packages.
 2. Run 'node server.js' in your terminal to run the server.
 3. Go to the url and start recording notes.

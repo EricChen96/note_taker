@@ -44,8 +44,9 @@ app.post("/api/notes", (req, res) => {
 app.delete("/api/notes/:id", (req, res) => {
     const chosen = parseInt(req.params.id);
     fs.readFile(path.join(__dirname, './db/db.json'), 'utf8', (error, data) => {
+        let notes = [];
         if (data) {
-            let notes = [...JSON.parse(data)];
+            notes = [...JSON.parse(data)];
             for (let i = 0; i < notes.length; i++) {
                 if (chosen === notes[i].id) {
                     notes.splice(i, 1);
