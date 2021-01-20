@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname,"./public")));
 
 let idCount = 0;
+let currentNotes = [];
 
 
 app.get("/notes", (req, res) => {
@@ -22,12 +23,11 @@ app.get("/api/notes", (req, res) => {
     );
 });
 
-let currentNotes = [];
 
 app.post("/api/notes", (req, res) => {
     let newNote = req.body;
     fs.readFile(path.join(__dirname, './db/db.json'), 'utf8', (error, data) => {
-        if (data) {
+        if (JSON.parse(data).length >= 1) {
             currentNotes = [...JSON.parse(data)];
             idCount = currentNotes[currentNotes.length - 1].id + 1;
         }
@@ -50,10 +50,10 @@ app.delete("/api/notes/:id", (req, res) => {
                     notes.splice(i, 1);
                 }
             }
-            fs.writeFile(path.join(__dirname,'./db/db.json'), JSON.stringify(notes), (err) =>
-                err ? console.error(err) : console.log('Note Deleted!')
-            );
         }
+        fs.writeFile(path.join(__dirname,'./db/db.json'), JSON.stringify(notes), (err) =>
+            err ? console.error(err) : console.log('Note Deleted!')
+        );
     });
     res.json(true);
 });
