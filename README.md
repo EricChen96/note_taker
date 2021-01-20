@@ -1,11 +1,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # note_taker
  
-![Note Taker](./Assets/Employee_Summary_Commandline_Screenshot.png)
-![Note Taker Preview](./Assets/Employee_Summary_Preview_Screenshot.png)
+![Note Taker Preview](./public/assets/notes_screenshot.png)
 
-[Link to Github repository](https://github.com/EricChen96/Employee_Summary_Generator) <br>
-[Link to video](https://www.youtube.com/watch?v=q35yutkwI7M&feature=youtu.be) <br>
+[Link to Github repository](https://github.com/EricChen96/note_taker) <br>
+[Link to site](https://calm-journey-92391.herokuapp.com/) <br>
 
 ## Description
 The following code create an app that allows the user to record notes. The app is linked to a server so it records the notes taken.
